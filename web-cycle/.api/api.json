@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "vwo",
+      "source": "@vwo/v4#e9fm1em0nx8eyb",
+      "integrity": "sha512-rGrjOpAi/7IcnkgHXhzs+GiBsYLy7QfhJwM9I8PraekjboW0xlF2QuK02lI3Kw2aGtilvrztWjXzvBmT7T9/oQ==",
+      "installerVersion": "6.1.2"
+    }
+  ]
+}
