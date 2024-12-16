@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import { generateImprovedPage } from '@/utils/generateAI';
-import { createABTest, addVariation } from '@/utils/vwo';
+import { createABTest, addVariation, startCampaign } from '@/utils/vwo';
 import axios from 'axios';
+
+// 指定されたミリ秒だけ待機する関数
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function POST(request: Request) {
     try {
@@ -20,10 +23,15 @@ export async function POST(request: Request) {
 
         if (campaignId) {
             // 2秒待機してからバリエーションを追加
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
+            await delay(2000);
             // 改善HTMLをバリエーションとして追加
             await addVariation(campaignId, improvedHtml);
+
+            // バリエーション追加後にさらに3秒待機してからキャンペーンを開始
+            await delay(3000);
+            // キャンペーンを開始する
+            const startCampaignResponse = await startCampaign(campaignId);
+            console.log('Campaign started:', startCampaignResponse);
 
             // improvedHtmlをレスポンスに含める
             return NextResponse.json({ success: true, campaignId, improvedHtml });
